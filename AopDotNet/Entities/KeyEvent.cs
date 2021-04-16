@@ -4,9 +4,10 @@
         Unknown = -1,
         Molecular = 0,
         Cellular = 1,
-        Organelle = 2,
-        Individual = 3,
-        Population = 4
+        Tissue = 2,
+        Organelle = 3,
+        Individual = 4,
+        Population = 5
     };
 
     public class KeyEvent {

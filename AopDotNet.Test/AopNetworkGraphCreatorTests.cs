@@ -71,6 +71,32 @@ namespace AopDotNet.Test {
             createSvg(network, "AopNetworkGraphCreator_TestCreate3.svg");
         }
 
+        [TestMethod]
+        public void AopNetworkGraphCreator_TestCreateSteatosisPartial() {
+            var kes = new[] {
+                new KeyEvent("triglyceride-accum-liver", "Triglyceride accumulation liver", BiologicalOrganisation.Cellular),
+                new KeyEvent("nucleus-distort-liver", "Nucleus distortion liver", BiologicalOrganisation.Cellular),
+                new KeyEvent("mitochondrial-disrupt-liver", "Mitochondrial disruption liver", BiologicalOrganisation.Cellular),
+                new KeyEvent("ER-stress-liver", "Endoplasmatic reticulum stress liver", BiologicalOrganisation.Cellular),
+                new KeyEvent("cytoplasm-displ-liver", "Cytoplasm displacement liver", BiologicalOrganisation.Cellular),
+                new KeyEvent("FattyCells-liver", "Fatty liver cells", BiologicalOrganisation.Tissue),
+                new KeyEvent("Steatosis-liver", "Liver steatosis", BiologicalOrganisation.Organelle),
+            }.ToDictionary(r => r.Id);
+            var kers = createEdges(kes, new[] {
+                ("triglyceride-accum-liver", "nucleus-distort-liver"),
+                ("triglyceride-accum-liver", "mitochondrial-disrupt-liver"),
+                ("triglyceride-accum-liver", "ER-stress-liver"),
+                ("triglyceride-accum-liver", "cytoplasm-displ-liver"),
+                ("nucleus-distort-liver", "FattyCells-liver"),
+                ("mitochondrial-disrupt-liver", "FattyCells-liver"),
+                ("ER-stress-liver", "FattyCells-liver"),
+                ("cytoplasm-displ-liver", "FattyCells-liver"),
+                ("FattyCells-liver", "Steatosis-liver")
+            });
+            var network = new AopNetwork("AOP network test steatosis (partial)", kes.Values, kers);
+            createSvg(network, "AopNetworkGraphCreator_TestCreateSteatosisPartial.svg");
+        }
+
         private static List<KeyEventRelationship> createEdges(IDictionary<string, KeyEvent> nodes, (string, string)[] edges) {
             return edges
                 .Select(r => new KeyEventRelationship($"{r.Item1}>{r.Item2}", nodes[r.Item1], nodes[r.Item2]))
