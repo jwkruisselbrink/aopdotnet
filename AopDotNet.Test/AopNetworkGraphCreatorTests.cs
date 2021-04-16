@@ -19,7 +19,7 @@ namespace AopDotNet.Test {
                 new KeyEvent("AO", "Adverse Outcome", BiologicalOrganisation.Individual),
             }.ToDictionary(r => r.Id);
             var kers = createEdges(kes, new[] { ("MIE1", "KE1"), ("MIE2", "KE2"), ("KE1", "AO"), ("KE2", "AO") });
-            var network = new AopNetwork("AOP network test 3", kes.Values, kers);
+            var network = new AopNetwork("AOP network test 1", kes.Values, kers);
             createSvg(network, "AopNetworkGraphCreator_TestCreate1.svg");
         }
 
@@ -40,7 +40,7 @@ namespace AopDotNet.Test {
                 ("KE1B", "AO"),
                 ("KE2", "AO")
             });
-            var network = new AopNetwork("AOP network test 3", kes.Values, kers);
+            var network = new AopNetwork("AOP network test 2", kes.Values, kers);
             createSvg(network, "AopNetworkGraphCreator_TestCreate2.svg");
         }
 

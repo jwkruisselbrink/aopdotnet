@@ -31,8 +31,8 @@ namespace AopDotNet {
             var offsetX = 10D;
             var offsetY = showTitle ? 40D : 20D;
 
-            var width = offsetX + layers.Count * (BlockWidth + HorizontalMargin) - HorizontalMargin;
-            var height = offsetY + layers.Max(r => r.KeyEvents.Count) * (BlockHeight + VerticalMargin) - VerticalMargin;
+            var width = offsetX + layers.Count * (BlockWidth + HorizontalMargin) - HorizontalMargin + 1;
+            var height = offsetY + layers.Max(r => r.KeyEvents.Count) * (BlockHeight + VerticalMargin) - VerticalMargin + 1;
             var doc = new SvgDocument() {
                 Width = (float)(width),
                 Height = (float)(height),
@@ -165,7 +165,7 @@ namespace AopDotNet {
                     EndX = endNode.X,
                     EndY = endNode.Y + startNode.Height / 2,
                     Stroke = new SvgColourServer(Color.Black),
-                    MarkerEnd = new Uri(string.Format("url(#{0})", arrowMarker.ID), UriKind.Relative)
+                    MarkerEnd = new Uri($"url(#{arrowMarker.ID})", UriKind.Relative)
                 };
                 doc.Children.Add(line);
             }
@@ -189,19 +189,20 @@ namespace AopDotNet {
         }
 
         private static SvgMarker CreateArrowMarker() {
+            var size = 7f;
             return new SvgMarker() {
                 ID = "markerArrow",
-                RefX = 10f,
-                RefY = 5f,
+                RefX = size * 1f,
+                RefY = size * .5f,
                 MarkerUnits = SvgMarkerUnits.StrokeWidth,
-                MarkerWidth = 10,
-                MarkerHeight = 10,
+                MarkerWidth = size,
+                MarkerHeight = size,
                 Orient = new SvgOrient() { IsAuto = true },
                 Children = {
                     new SvgPath() {
                         ID = "pathMarkerArrow",
                         Fill = new SvgColourServer(Color.Black),
-                        PathData = SvgPathBuilder.Parse(@"M 0 0 L 10 5 L 0 10 z")
+                        PathData = SvgPathBuilder.Parse($@"M 0 0 L {size * 1f} {size * .5f} L 0 {size} z")
                     }
                 }
             };
